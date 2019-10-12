@@ -1,0 +1,28 @@
+server:
+  session-timeout: 1800
+  uri-encoding: utf-8
+  tomcat:
+    max-connections: 100
+    max-threads: 1000
+    min-spare-threads: 30
+  port: 7000
+
+spring:
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  profiles: 
+    active: dev
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/**/*Mapper.xml
+  typeAliasesPackage: com.shirojwt.**.model
+  global-config:
+    id-type: 0
+    field-strategy: 1
+    db-column-underline: true
+    logic-delete-value: 1
+    logic-not-delete-value: 0
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
