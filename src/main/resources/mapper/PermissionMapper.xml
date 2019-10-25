@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.shirojwt.dao.PermissionMapper">
+<mapper namespace="com.hao.sys.dao.PermissionMapper">
 
-  <select id="findPermissionByRole" resultType="com.shirojwt.model.PermissionDto" parameterType="com.shirojwt.model.RoleDto">
+  <select id="findPermissionByRole" resultType="com.hao.sys.model.PermissionDto" parameterType="com.hao.sys.model.RoleDto">
     SELECT p.id as id, p.name as `name`, p.per_code as perCode
     FROM role r
     LEFT JOIN role_permission rp ON r.id = rp.role_id

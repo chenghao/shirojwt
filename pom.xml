@@ -175,7 +175,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.shirojwt.StartupApplication</mainClass>
+                            <mainClass>com.hao.StartupApplication</mainClass>
                         </manifest>
                         <manifestEntries>
                             <!--<Class-Path>.</Class-Path>-->

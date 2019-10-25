@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.shirojwt.dao.RoleMapper">
+<mapper namespace="com.hao.sys.dao.RoleMapper">
 
-  <select id="findRoleByUser" resultType="com.shirojwt.model.RoleDto" parameterType="com.shirojwt.model.UserDto">
+  <select id="findRoleByUser" resultType="com.hao.sys.model.RoleDto" parameterType="com.hao.sys.model.UserDto">
     SELECT r.id as id, r.name as `name`
     FROM `user` u
     LEFT JOIN user_role ur ON u.id = ur.user_id

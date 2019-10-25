@@ -16,7 +16,7 @@ spring:
 
 mybatis-plus:
   mapper-locations: classpath:mapper/**/*Mapper.xml
-  typeAliasesPackage: com.shirojwt.**.model
+  typeAliasesPackage: com.hao.**.model
   global-config:
     id-type: 0
     field-strategy: 1
