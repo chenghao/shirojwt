@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hao.sys.dao.PermissionMapper">
 
-  <select id="findPermissionByRole" resultType="com.hao.sys.model.PermissionDto" parameterType="com.hao.sys.model.RoleDto">
-    SELECT p.id as id, p.name as `name`, p.per_code as perCode
+  <select id="findMenuByRole" resultType="com.hao.sys.model.MenuDto" parameterType="com.hao.sys.model.RoleDto">
+    SELECT m.id as id, m.name as `name`, m.authority as authority
     FROM role r
-    LEFT JOIN role_permission rp ON r.id = rp.role_id
-    LEFT JOIN permission p ON p.id = rp.permission_id
+    LEFT JOIN role_menu rm ON r.id = rm.role_id
+    LEFT JOIN menu m ON m.id = rm.menu_id
     <where>
       1 = 1
       <if test="name != null and name != '' ">

@@ -1,16 +1,16 @@
 package com.hao.shirojwt.config.shiro;
 
 import com.hao.shirojwt.config.shiro.jwt.JwtToken;
-import com.hao.sys.dao.PermissionMapper;
-import com.hao.sys.dao.RoleMapper;
-import com.hao.sys.dao.UserMapper;
-import com.hao.sys.model.PermissionDto;
-import com.hao.sys.model.RoleDto;
-import com.hao.sys.model.UserDto;
 import com.hao.shirojwt.util.Constant;
 import com.hao.shirojwt.util.JedisUtil;
 import com.hao.shirojwt.util.JwtUtil;
 import com.hao.shirojwt.util.StringUtil;
+import com.hao.sys.dao.MenuMapper;
+import com.hao.sys.dao.RoleMapper;
+import com.hao.sys.dao.UserMapper;
+import com.hao.sys.model.MenuDto;
+import com.hao.sys.model.RoleDto;
+import com.hao.sys.model.UserDto;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -34,7 +34,7 @@ public class UserRealm extends AuthorizingRealm {
     @Autowired
     private RoleMapper roleMapper;
     @Autowired
-    private PermissionMapper permissionMapper;
+    private MenuMapper menuMapper;
 
     /**
      * 大坑，必须重写此方法，不然Shiro会报错
@@ -61,11 +61,11 @@ public class UserRealm extends AuthorizingRealm {
                 // 添加角色
                 simpleAuthorizationInfo.addRole(roleDto.getName());
                 // 根据用户角色查询权限
-                List<PermissionDto> permissionDtos = permissionMapper.findPermissionByRole(roleDto);
-                for (PermissionDto permissionDto : permissionDtos) {
-                    if (permissionDto != null) {
+                List<MenuDto> menuDtos = menuMapper.findMenuByRole(roleDto);
+                for (MenuDto menuDto : menuDtos) {
+                    if (menuDto != null) {
                         // 添加权限
-                        simpleAuthorizationInfo.addStringPermission(permissionDto.getPerCode());
+                        simpleAuthorizationInfo.addStringPermission(menuDto.getAuthority());
                     }
                 }
             }

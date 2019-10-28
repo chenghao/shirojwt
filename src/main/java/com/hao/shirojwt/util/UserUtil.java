@@ -19,7 +19,6 @@ public class UserUtil {
     /**
      * 获取当前登录用户
      * @param
-     * @return com.wang.model.UserDto
      */
     public UserDto getUser() {
         String token = SecurityUtils.getSubject().getPrincipal().toString();
@@ -38,7 +37,6 @@ public class UserUtil {
     /**
      * 获取当前登录用户Id
      * @param
-     * @return com.wang.model.UserDto
      */
     public Integer getUserId() {
         return getUser().getId();
@@ -47,7 +45,6 @@ public class UserUtil {
     /**
      * 获取当前登录用户Token
      * @param
-     * @return com.wang.model.UserDto
      */
     public String getToken() {
         return SecurityUtils.getSubject().getPrincipal().toString();
@@ -56,7 +53,6 @@ public class UserUtil {
     /**
      * 获取当前登录用户Account
      * @param
-     * @return com.wang.model.UserDto
      */
     public String getAccount() {
         String token = SecurityUtils.getSubject().getPrincipal().toString();

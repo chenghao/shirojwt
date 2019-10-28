@@ -5,15 +5,15 @@ import org.lionsoul.ip2region.DbMakerConfigException;
 import org.lionsoul.ip2region.DbSearcher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.filter.HttpPutFormContentFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 import java.io.IOException;
 
 
 @Configuration
-public class MyWebMvcConfigurer implements WebMvcConfigurer {
+public class MyWebMvcConfigurer extends WebMvcConfigurationSupport {
 
     // 支持跨域访问
     @Override
@@ -21,10 +21,9 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
         registry.addMapping("/**");
     }
 
-    // 支持PUT请求
-    @Bean
-    public HttpPutFormContentFilter httpPutFormContentFilter() {
-        return new HttpPutFormContentFilter();
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/webapp/**").addResourceLocations("classpath:/webapp/");
     }
 
     @Bean

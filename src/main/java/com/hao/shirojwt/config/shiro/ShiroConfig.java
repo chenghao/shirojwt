@@ -76,11 +76,14 @@ public class ShiroConfig {
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>(16);
 
         // Swagger接口文档
-         /*filterChainDefinitionMap.put("/v2/api-docs", "anon");
+         filterChainDefinitionMap.put("/v2/api-docs", "anon");
          filterChainDefinitionMap.put("/webjars/**", "anon");
          filterChainDefinitionMap.put("/swagger-resources/**", "anon");
          filterChainDefinitionMap.put("/swagger-ui.html", "anon");
-         filterChainDefinitionMap.put("/doc.html", "anon");*/
+         filterChainDefinitionMap.put("/doc.html", "anon");
+
+         // 静态文件
+        filterChainDefinitionMap.put("/webapp/**", "anon");
 
         // 公开接口
         // filterChainDefinitionMap.put("/api/**", "anon");

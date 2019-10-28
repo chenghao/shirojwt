@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 /**
- * UserController
+ * 用户
  */
 @RestController
 @RequestMapping("/user")
