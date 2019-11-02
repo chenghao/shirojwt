@@ -1,0 +1,57 @@
+<ol class="breadcrumb" style="margin-top: -28px;background-color:#68abd22b; width: 120%;margin-left: -16px;">
+    <li><i class="fa fa-home"></i>{{pieTitle}}</li>
+    <li>后台管理</li>
+    <li>角色管理</li>
+</ol>
+
+<div class="col-xs-1" style="margin-top: 0px;margin-bottom: 16px">
+    <button class="btn btn-success" data-toggle="modal" data-target="#addInfoModal" ng-click="showAddRole()">添加角色</button>
+</div>
+
+    <table class="table table-bordered table-hover" >
+        <thead>
+        <tr>
+            <th>角色ID</th>
+            <th>角色名称</th>
+            <th>状态</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tr class="" ng-repeat="item in items">
+            <td ng-bind="item.role_id"></td>
+            <td ng-bind="item.role_name"></td>
+            <td ng-bind="item.state|account_state_filter"></td>
+            <td ng-bind="item.checkRole" hidden></td>
+            <td ng-bind="item.powerJson" hidden></td>
+            <td>
+                <button type="button" class="btn btn-danger btn-xs" ng-click="showInfo(item.role_id,item.role_name,item.checkRole,item.powerJson)"  data-toggle="modal" data-target="#editInfoModal">编辑</button>
+                <button type="button" class="btn btn-danger btn-xs" ng-click="deleteRole(item.role_id)" >删除</button>
+            </td>
+        </tr>
+    </table>
+
+<div ng-show="gettingdata" style="width: 100%;height: 98px;background-color: black;text-align: center;">
+    <img src="../../webapp/img/wait.jpg.gif"><span style="color: white;font-size: 20px">数据请求中...请稍等!</span>
+</div>
+
+<nav>
+    <ul class="pagination">
+        <li>
+            <a ng-click="Previous()">
+                <span>上一页</span>
+            </a>
+        </li>
+        <li ng-repeat="page in pageList" ng-class="{active: isActivePage(page)}">
+            <a ng-click="selectPage(page)">{{ page }}</a>
+        </li>
+        <li>
+            <a ng-click="Next()">
+                <span>下一页</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+
+
+

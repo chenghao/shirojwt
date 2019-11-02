@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <link rel="stylesheet" href="static/adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/adminlte/bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="static/adminlte/bower_components/Ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="static/adminlte/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="static/adminlte/dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="static/adminlte/bower_components/select2/dist/css/select2.min.css">
+
+    <title></title>
+
+    <style>
+        th{
+            text-align: center;
+        }
+        td{
+            text-align: center;
+        }
+
+        #user_account,span{
+            cursor: pointer;
+        }
+        /*固定在左边*/
+        .left {
+            /*width: 20%;*/
+            height: 100%;
+            position: fixed;
+            outline: 0px solid;
+            /*background: red;*/
+        }
+    </style>
+</head>
+
+<body ng-app="app" class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <!--头部-->
+    <header class="main-header navbar-static-top navbar-fixed-top">
+        <!-- Logo -->
+        <span class="logo left">
+            <span class="logo-mini"><b id="title1"></b></span>
+            <span class="logo-lg"><b id="title2"></b>后台管理</span>
+        </span>
+        <!--右侧头部-->
+        <nav class="navbar navbar-static-top navbar-fixed-top">
+            <!--收缩-->
+            <span href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </span>
+            <!--退出系统-->
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown user user-menu">
+                        <a href="" class="dropdown notifications-menu" data-toggle="dropdown">
+                            <span class="hidden-xs" ><i class="fa fa-flag-o"></i>&nbsp;欢迎您：<span id="user_account"></span></span>
+                        </a>
+                    </li>
+                    <li class="dropdown user user-menu">
+                        <a href="" onclick="loginOut()" class="dropdown notifications-menu" data-toggle="dropdown">
+                            <span class="hidden-xs" ><i class="fa fa-bell-o"></i>&nbsp;注销</span>
+                        </a>
+                    </li>
+                    <li class="dropdown user user-menu">
+                        <a href="" onclick="changePwd()" class="dropdown notifications-menu" data-toggle="dropdown">
+                            <span class="hidden-xs" data-toggle="modal" data-target="#changePwdModal" ><i class="fa fa-lock"></i>&nbsp;修改密码</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!--左侧菜单-->
+    <aside class="main-sidebar left">
+        <section class="sidebar">
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="static/adminlte/dist/img/avatar5.png" class="img-circle" alt="User Image">
+                </div>
+                <div class="pull-left info">
+                    <p>导航菜单</p>
+                </div>
+            </div>
+            <!-- 搜索表单 -->
+            <form action="" method="get" class="sidebar-form">
+                <div class="input-group">
+                    <input id="searchMenu" type="text" name="q" class="form-control span4" placeholder="搜索菜单" autocomplete="off" >
+                    <span class="input-group-btn">
+                        <button type="submit" name="search" id="search-btn" class="btn btn-flat" disabled>
+                            <i class="fa fa-search"></i><!--<i class="glyphicon glyphicon-heart"></i>-->
+                        </button>
+                    </span>
+                </div>
+            </form>
+
+            <ul class="sidebar-menu" data-widget="tree" id="menu">
+                <li class="header">管理后台</li>
+                <li class="treeview">
+                    <a>
+                        <i class="fa fa-database"></i>
+                        <span>系统管理</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="treeview-son">
+                            <a href="index.html#/htgl_jsgl">
+                                <i class="fa fa-circle-o"></i>角色管理
+                            </a>
+                        </li>
+                        <li class="treeview-son">
+                            <a href="index.html#/htgl_yhgl">
+                                <i class="fa fa-circle-o"></i>用户管理
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a>
+                        <i class="fa fa-database"></i>
+                        <span>日志管理</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="treeview-son">
+                            <a href="index.html#/rzgl_login">
+                                <i class="fa fa-circle-o"></i>登录日志
+                            </a>
+                        </li>
+                        <li class="treeview-son">
+                            <a href="index.html#/rzgl_xtrz">
+                                <i class="fa fa-circle-o"></i>系统日志
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+    </aside>
+
+    <!--正文-->
+    <div class="content-wrapper">
+        <!--正文头部-->
+        <section class="content-header" style="padding-top: 65px;">
+
+        </section>
+
+        <!--正文-->
+        <section class="content">
+            <div ui-view></div>
+        </section>
+    </div>
+
+</div>
+
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="changePwdModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    修改密码，请谨慎操作!
+                </h4>
+            </div>
+            <div class="modal-body" style="height: 260px;">
+                <div class="col-xs-7" style="margin-top: 14px;"><span>旧密码:</span><input placeholder="旧密码" style="width: 240px;"  name="old_pwd" value="" class="form-control" type="password"></div>
+                <div class="col-xs-7" style="margin-top: 14px;"><span>新密码:</span><input placeholder="新密码" style="width: 240px;"  name="new_pwd" value="" class="form-control" type="password"></div>
+                <div class="col-xs-7" style="margin-top: 14px;"><span>确认新密码:</span><input placeholder="确认新密码" style="width: 240px;"  name="again_pwd" value="" class="form-control" type="password"></div>
+                <input type="hidden" id="changeAccount">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" onclick="changePwdSubmit()">
+                    提交更改
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+
+<script src="static/adminlte/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="static/adminlte/bower_components/jquery-ui/jquery-ui.min.js"></script>
+<script>
+    $.widget.bridge('uibutton', $.ui.button);
+</script>
+<script src="static/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="static/adminlte/bower_components/moment/min/moment.min.js"></script>
+<script src="static/adminlte/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<script src="static/adminlte/dist/js/adminlte.min.js"></script>
+<script src="static/adminlte/bower_components/select2/dist/js/select2.min.js"></script>
+<script src="static/layui/laydate/laydate.js"></script>
+<script src="static/layui/layer/layer.js"></script>
+
+<script src="static/angularjs/json2.js"></script>
+<script src="static/angularjs/angular1.4.6.js"></script>
+<script src="static/angularjs/angular-ui-router.min.js"></script>
+<script src="static/angularjs/angular-sanitize.js"></script>
+<script src="static/angularjs/ui-bootstrap-tpls-2.2.0.min.js"></script>
+
+<script>
+    document.write('<script type="text/javascript" src="js/common/util.js?'+new Date()+'"><\/script>');
+    document.write('<script type="text/javascript" src="js/angularjs/ng-route.js?'+new Date()+'"><\/script>');
+    document.write('<script type="text/javascript" src="js/angularjs/ng-service.js?'+new Date()+'"><\/script>');
+    document.write('<script type="text/javascript" src="js/angularjs/ng-filter.js?'+new Date()+'"><\/script>');
+    document.write('<script type="text/javascript" src="js/angularjs/ng-controller-sys.js?'+new Date()+'"><\/script>');
+</script>
+
+<script src="static/adminlte/plugins/bootstrap-typeahead/js/prettify.js" type="text/javascript"></script>
+<script src="static/adminlte/plugins/bootstrap-typeahead/js/mockjax.js" type="text/javascript"></script>
+<script src="static/adminlte/plugins/bootstrap-typeahead/js/bootstrap-typeahead.js" type="text/javascript"></script>
+
+<script>
+
+
+
+
+
+    /*setTimeout(function () {
+        $('#searchMenu').typeahead({
+            source: store.get('menus'),
+            itemSelected: displayResult
+        });
+    }, 200);*/
+
+    function displayResult(item, val, text) {
+        window.location.href = val;
+    }
+
+</script>
+</body>
+</html>

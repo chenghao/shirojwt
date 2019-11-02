@@ -168,7 +168,7 @@
                     <excludes>
                         <exclude>*.**</exclude>
                         <exclude>/mapper/**</exclude>
-                        <exclude>/static/**</exclude>
+                        <exclude>/webapp/**</exclude>
                     </excludes>
 
                     <archive>
