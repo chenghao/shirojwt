@@ -1,5 +1,6 @@
 package com.hao.shirojwt.config.shiro;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.hao.shirojwt.config.shiro.jwt.JwtToken;
 import com.hao.shirojwt.util.Constant;
 import com.hao.shirojwt.util.JedisUtil;
@@ -65,7 +66,9 @@ public class UserRealm extends AuthorizingRealm {
                 for (MenuDto menuDto : menuDtos) {
                     if (menuDto != null) {
                         // 添加权限
-                        simpleAuthorizationInfo.addStringPermission(menuDto.getAuthority());
+                        if(StringUtil.isNotBlank(menuDto.getAuthority())){
+                            simpleAuthorizationInfo.addStringPermission(menuDto.getAuthority());
+                        }
                     }
                 }
             }
@@ -88,7 +91,7 @@ public class UserRealm extends AuthorizingRealm {
         // 查询用户是否存在
         UserDto userDto = new UserDto();
         userDto.setAccount(account);
-        userDto = userMapper.selectOne(userDto);
+        userDto = userMapper.selectOne(new QueryWrapper<>(userDto));
         if (userDto == null) {
             throw new AuthenticationException("该帐号不存在(The account does not exist.)");
         }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.hao.sys.dao.PermissionMapper">
+<mapper namespace="com.hao.sys.dao.MenuMapper">
 
   <select id="findMenuByRole" resultType="com.hao.sys.model.MenuDto" parameterType="com.hao.sys.model.RoleDto">
     SELECT m.id as id, m.name as `name`, m.authority as authority

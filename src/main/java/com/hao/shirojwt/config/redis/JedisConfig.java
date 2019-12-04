@@ -1,8 +1,7 @@
 package com.hao.shirojwt.config.redis;
 
 import com.hao.shirojwt.util.StringUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,10 +11,9 @@ import redis.clients.jedis.JedisPoolConfig;
 /**
  * Jedis配置，项目启动注入JedisPool
  */
+@Slf4j
 @Configuration
 public class JedisConfig {
-    private static final Logger logger = LoggerFactory.getLogger(JedisConfig.class);
-
     @Value("${redis.host}")
     private String host;
     @Value("${redis.port}")
@@ -36,7 +34,6 @@ public class JedisConfig {
     @Value("${redis.pool.min-idle}")
     private int minIdle;
 
-
     @Bean
     public JedisPool redisPoolFactory() {
         try {
@@ -48,75 +45,12 @@ public class JedisConfig {
 
             String pwd = StringUtil.isBlank(password) ? null : password;
             JedisPool jedisPool = new JedisPool(jedisPoolConfig, host, port, timeout, pwd, database);
-            logger.info("初始化Redis连接池JedisPool成功!地址: " + host + ":" + port);
+            log.info("初始化Redis连接池JedisPool成功!地址: " + host + ":" + port);
             return jedisPool;
         } catch (Exception e) {
-            logger.error("初始化Redis连接池JedisPool异常:" + e.getMessage());
+            log.error("初始化Redis连接池JedisPool异常:" + e.getMessage());
         }
         return null;
     }
 
-    public String getHost() {
-        return host;
-    }
-
-    public void setHost(String host) {
-        this.host = host;
-    }
-
-    public int getPort() {
-        return port;
-    }
-
-    public void setPort(int port) {
-        this.port = port;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public int getTimeout() {
-        return timeout;
-    }
-
-    public void setTimeout(int timeout) {
-        this.timeout = timeout;
-    }
-
-    public int getMaxActive() {
-        return maxActive;
-    }
-
-    public void setMaxActive(int maxActive) {
-        this.maxActive = maxActive;
-    }
-
-    public int getMaxWait() {
-        return maxWait;
-    }
-
-    public void setMaxWait(int maxWait) {
-        this.maxWait = maxWait;
-    }
-
-    public int getMaxIdle() {
-        return maxIdle;
-    }
-
-    public void setMaxIdle(int maxIdle) {
-        this.maxIdle = maxIdle;
-    }
-
-    public int getMinIdle() {
-        return minIdle;
-    }
-
-    public void setMinIdle(int minIdle) {
-        this.minIdle = minIdle;
-    }
 }

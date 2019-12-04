@@ -1,6 +1,6 @@
 package com.hao.sys.service.impl;
 
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hao.sys.dao.MenuMapper;
 import com.hao.sys.model.MenuDto;
 import com.hao.sys.service.MenuService;

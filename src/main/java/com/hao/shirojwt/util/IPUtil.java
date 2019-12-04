@@ -1,17 +1,16 @@
 package com.hao.shirojwt.util;
 
 import com.hao.shirojwt.config.SpringUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.lionsoul.ip2region.DataBlock;
 import org.lionsoul.ip2region.DbSearcher;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+@Slf4j
 public class IPUtil {
-    private static final Logger log = LoggerFactory.getLogger(IPUtil.class);
 
     /**
      * 根据请求获取ip

@@ -1,14 +1,16 @@
 package com.hao.sys.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.hao.shirojwt.annotation.Limit;
 import com.hao.shirojwt.annotation.Log;
 import com.hao.shirojwt.annotation.enums.BusinessType;
 import com.hao.shirojwt.exception.BDException;
+import com.hao.shirojwt.util.*;
 import com.hao.sys.model.UserDto;
 import com.hao.sys.service.UserService;
-import com.hao.shirojwt.util.*;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
@@ -24,6 +26,7 @@ import java.util.*;
 /**
  * 用户
  */
+@Slf4j
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -42,18 +45,19 @@ public class UserController {
      * 获取用户列表
      * @param 
      */
+    @Limit(name = "获取用户列表", prefix="user", key="user", period=10, count=5)
     @Log(title = "获取用户列表", businessType = BusinessType.QUERY)
     @GetMapping
-    @RequiresPermissions(logical = Logical.AND, value = {"user:view"})
+    @RequiresPermissions(logical = Logical.AND, value = {"get:user"})
     public PageResult<UserDto> user(Integer page, Integer limit) {
         if (page == null || page < 0) page = Constant.page;
         if (limit == null || limit < 0) limit = Constant.limit;
 
         Page<UserDto> userPage = new Page<>(page, limit);
-        EntityWrapper<UserDto> wrapper = new EntityWrapper<>();
-        wrapper.orderBy("reg_time", false);
+        QueryWrapper<UserDto> wrapper = new QueryWrapper<>();
+        wrapper.orderByDesc("reg_time");
 
-        userService.selectPage(userPage, wrapper);
+        userService.page(userPage, wrapper);
         List<UserDto> userList = userPage.getRecords();
 
         return new PageResult<>(userList, userPage.getTotal());
@@ -65,7 +69,7 @@ public class UserController {
      */
     @Log(title = "获取在线用户", businessType = BusinessType.QUERY)
     @GetMapping("/online")
-    @RequiresPermissions(logical = Logical.AND, value = {"user:view"})
+    @RequiresPermissions(logical = Logical.AND, value = {"get:user"})
     public R online() {
         List<Object> userDtos = new ArrayList<>();
         // 查询所有Redis键
@@ -76,7 +80,7 @@ public class UserController {
                 String[] strArray = key.split(":");
                 UserDto userDto = new UserDto();
                 userDto.setAccount(strArray[strArray.length - 1]);
-                userDto = userService.selectOne(new EntityWrapper<>(userDto));
+                userDto = userService.getOne(new QueryWrapper<>(userDto));
                 // 设置登录时间
                 userDto.setLoginTime(new Date(Long.parseLong(JedisUtil.getObject(key).toString())));
                 userDtos.add(userDto);
@@ -92,6 +96,7 @@ public class UserController {
      * 登录授权
      * @param userDto
      */
+    @Limit(name = "登录授权", period=10, count=5)
     @Log(title = "登录授权")
     @PostMapping("/login")
     public R login(@RequestBody UserDto userDto, HttpServletResponse httpServletResponse) {
@@ -99,10 +104,11 @@ public class UserController {
         UserDto userDtoTemp = new UserDto();
         userDtoTemp.setAccount(userDto.getAccount());
         userDtoTemp.setPassword(AesCipherUtil.enCrypto(userDto.getAccount() + userDto.getPassword()));
-        userDtoTemp = userService.selectOne(new EntityWrapper<>(userDtoTemp));
+        userDtoTemp = userService.getOne(new QueryWrapper<>(userDtoTemp));
         if (userDtoTemp == null) {
             throw new BDException("该帐号不存在(The account does not exist.)");
         }
+
         // 密码进行AES解密
         String key = AesCipherUtil.deCrypto(userDtoTemp.getPassword());
         // 因为密码加密是以帐号+密码的形式进行加密的，所以解密后的对比是帐号+密码

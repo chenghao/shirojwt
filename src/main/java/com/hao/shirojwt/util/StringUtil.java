@@ -1,5 +1,7 @@
 package com.hao.shirojwt.util;
 
+import java.security.MessageDigest;
+
 /**
  * String工具
  */
@@ -104,4 +106,41 @@ public class StringUtil {
     public static String addSingleQuotes(String param) {
         return "\'" + param + "\'";
     }
+
+    /**
+     * 清除回车，换行，制表符，空格等
+     * @param str
+     * @return
+     */
+    public static String clearUnescape(String str){
+        if(isBlank(str)){
+            return "";
+        }
+        str = str.replaceAll("(\r\n|\r|\n|\n\r|\t|\\s)", "");
+        return str;
+    }
+
+    //MD5
+    static final char HEX_DIGITS[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+    public final static String MD5(String s) {
+        try {
+            byte[] btInput = s.getBytes("UTF-8");
+            MessageDigest mdInst = MessageDigest.getInstance("MD5");
+            mdInst.update(btInput);
+            byte[] md = mdInst.digest();
+            int j = md.length;
+            char str[] = new char[j * 2];
+            int k = 0;
+            for (int i = 0; i < j; i++) {
+                byte byte0 = md[i];
+                str[k++] = HEX_DIGITS[byte0 >>> 4 & 0xf];
+                str[k++] = HEX_DIGITS[byte0 & 0xf];
+            }
+            return new String(str);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

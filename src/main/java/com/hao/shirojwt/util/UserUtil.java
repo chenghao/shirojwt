@@ -1,5 +1,6 @@
 package com.hao.shirojwt.util;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.hao.sys.dao.UserMapper;
 import com.hao.shirojwt.exception.BDException;
 import com.hao.sys.model.UserDto;
@@ -21,12 +22,10 @@ public class UserUtil {
      * @param
      */
     public UserDto getUser() {
-        String token = SecurityUtils.getSubject().getPrincipal().toString();
-        // 解密获得Account
-        String account = JwtUtil.getClaim(token, Constant.ACCOUNT);
+        String account = getAccount();
         UserDto userDto = new UserDto();
         userDto.setAccount(account);
-        userDto = userMapper.selectOne(userDto);
+        userDto = userMapper.selectOne(new QueryWrapper<>(userDto));
         // 用户是否存在
         if (userDto == null) {
             throw new BDException("该帐号不存在(The account does not exist.)");
@@ -55,8 +54,9 @@ public class UserUtil {
      * @param
      */
     public String getAccount() {
-        String token = SecurityUtils.getSubject().getPrincipal().toString();
+        String token = getToken();
         // 解密获得Account
-        return JwtUtil.getClaim(token, Constant.ACCOUNT);
+        String account = JwtUtil.getClaim(token, Constant.ACCOUNT);
+        return account;
     }
 }

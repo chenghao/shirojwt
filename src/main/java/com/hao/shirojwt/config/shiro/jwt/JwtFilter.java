@@ -5,11 +5,11 @@ import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.hao.shirojwt.exception.BDException;
 import com.hao.shirojwt.util.*;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.ServletRequest;
@@ -22,11 +22,8 @@ import java.io.PrintWriter;
 /**
  * JWT过滤
  */
+@Slf4j
 public class JwtFilter extends BasicHttpAuthenticationFilter {
-    /**
-     * logger
-     */
-    private static final Logger logger = LoggerFactory.getLogger(JwtFilter.class);
 
     /**
      * 这里我们详细说明下为什么最终返回的都是true，即允许访问
@@ -77,7 +74,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
             String httpMethod = httpServletRequest.getMethod();
             // 获取当前请求URI
             String requestURI = httpServletRequest.getRequestURI();
-            logger.info("当前请求 {} Authorization属性(Token)为空 请求类型 {}", requestURI, httpMethod);
+            log.info("当前请求 {} Authorization属性(Token)为空 请求类型 {}", requestURI, httpMethod);
             // mustLoginFlag = true 开启任何请求必须登录才可访问
             Boolean mustLoginFlag = false;
             if (mustLoginFlag) {
@@ -183,12 +180,12 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
         HttpServletResponse httpServletResponse = WebUtils.toHttp(response);
         httpServletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
         httpServletResponse.setCharacterEncoding("UTF-8");
-        httpServletResponse.setContentType("application/json; charset=utf-8");
+        httpServletResponse.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE ); // "application/json; charset=utf-8"
         try (PrintWriter out = httpServletResponse.getWriter()) {
             String data = JSONObject.toJSONString(R.error(HttpStatus.UNAUTHORIZED.value(), "无权访问(Unauthorized):" + msg));
             out.append(data);
         } catch (IOException e) {
-            logger.error("直接返回Response信息出现IOException异常:" + e.getMessage());
+            log.error("直接返回Response信息出现IOException异常:" + e.getMessage());
             throw new BDException("直接返回Response信息出现IOException异常:" + e.getMessage());
         }
     }

@@ -1,8 +1,7 @@
 package com.hao.shirojwt.util;
 
 import com.hao.shirojwt.exception.BDException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,8 +12,8 @@ import java.util.Properties;
 /**
  * Properties工具
  */
+@Slf4j
 public class PropertiesUtil {
-    private static final Logger logger = LoggerFactory.getLogger(PropertiesUtil.class);
 
     private final Properties PROP = new Properties();
 
@@ -26,7 +25,7 @@ public class PropertiesUtil {
             BufferedReader bf = new BufferedReader(new InputStreamReader(in));
             PROP.load(bf);
         } catch (IOException e) {
-            logger.error("PropertiesUtil工具类读取配置文件出现IOException异常:" + e.getMessage());
+            log.error("PropertiesUtil工具类读取配置文件出现IOException异常:" + e.getMessage());
             throw new BDException("PropertiesUtil工具类读取配置文件出现IOException异常:" + e.getMessage());
         } finally {
             try {
@@ -34,7 +33,7 @@ public class PropertiesUtil {
                     in.close();
                 }
             } catch (IOException e) {
-                logger.error("PropertiesUtil工具类读取配置文件出现IOException异常:" + e.getMessage());
+                log.error("PropertiesUtil工具类读取配置文件出现IOException异常:" + e.getMessage());
                 throw new BDException("PropertiesUtil工具类读取配置文件出现IOException异常:" + e.getMessage());
             }
         }

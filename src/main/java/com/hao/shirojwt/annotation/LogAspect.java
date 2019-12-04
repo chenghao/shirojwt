@@ -2,12 +2,13 @@ package com.hao.shirojwt.annotation;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hao.shirojwt.annotation.enums.BusinessStatus;
-import com.hao.sys.model.UserDto;
-import com.hao.sys.model.entity.OperLog;
 import com.hao.shirojwt.util.HttpContextUtils;
 import com.hao.shirojwt.util.IPUtil;
 import com.hao.shirojwt.util.ThreadPoolUtil;
 import com.hao.shirojwt.util.UserUtil;
+import com.hao.sys.model.UserDto;
+import com.hao.sys.model.entity.OperLog;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -15,8 +16,6 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,10 +25,10 @@ import java.util.Map;
 /**
  * 操作日志记录处理
  */
+@Slf4j
 @Aspect
 @Component
 public class LogAspect {
-    private static final Logger log = LoggerFactory.getLogger(LogAspect.class);
 
     @Autowired
     private ThreadPoolUtil threadPoolUtil;

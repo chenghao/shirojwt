@@ -1,8 +1,7 @@
 package com.hao.shirojwt.util;
 
 import com.hao.shirojwt.exception.BDException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.*;
@@ -17,9 +16,9 @@ import java.util.Map;
 /**
  * AES加密解密工具类
  */
+@Slf4j
 @Component
 public class AesCipherUtil {
-    private static final Logger logger = LoggerFactory.getLogger(AesCipherUtil.class);
 
     /**
      * AES密码加密私钥(Base64加密)
@@ -71,16 +70,16 @@ public class AesCipherUtil {
             // 先将二进制转换成16进制，再返回Base64加密后的String
             return Base64ConvertUtil.encode(HexConvertUtil.parseByte2HexStr(cipherByte));
         } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
-            logger.error("getInstance()方法异常:" + e.getMessage());
+            log.error("getInstance()方法异常:" + e.getMessage());
             throw new BDException("getInstance()方法异常:" + e.getMessage());
         } catch (UnsupportedEncodingException e) {
-            logger.error("Base64加密异常:" + e.getMessage());
+            log.error("Base64加密异常:" + e.getMessage());
             throw new BDException("Base64加密异常:" + e.getMessage());
         } catch (InvalidKeyException e) {
-            logger.error("初始化Cipher对象异常:" + e.getMessage());
+            log.error("初始化Cipher对象异常:" + e.getMessage());
             throw new BDException("初始化Cipher对象异常:" + e.getMessage());
         } catch (IllegalBlockSizeException | BadPaddingException e) {
-            logger.error("加密异常，密钥有误:" + e.getMessage());
+            log.error("加密异常，密钥有误:" + e.getMessage());
             throw new BDException("加密异常，密钥有误:" + e.getMessage());
         }
     }
@@ -102,16 +101,16 @@ public class AesCipherUtil {
             byte[] cipherByte = c.doFinal(HexConvertUtil.parseHexStr2Byte(Base64ConvertUtil.decode(str)));
             return new String(cipherByte);
         } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
-            logger.error("getInstance()方法异常:" + e.getMessage());
+            log.error("getInstance()方法异常:" + e.getMessage());
             throw new BDException("getInstance()方法异常:" + e.getMessage());
         } catch (UnsupportedEncodingException e) {
-            logger.error("Base64解密异常:" + e.getMessage());
+            log.error("Base64解密异常:" + e.getMessage());
             throw new BDException("Base64解密异常:" + e.getMessage());
         } catch (InvalidKeyException e) {
-            logger.error("初始化Cipher对象异常:" + e.getMessage());
+            log.error("初始化Cipher对象异常:" + e.getMessage());
             throw new BDException("初始化Cipher对象异常:" + e.getMessage());
         } catch (IllegalBlockSizeException | BadPaddingException e) {
-            logger.error("解密异常，密钥有误:" + e.getMessage());
+            log.error("解密异常，密钥有误:" + e.getMessage());
             throw new BDException("解密异常，密钥有误:" + e.getMessage());
         }
     }

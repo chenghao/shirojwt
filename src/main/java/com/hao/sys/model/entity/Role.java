@@ -1,7 +1,8 @@
 package com.hao.sys.model.entity;
 
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
 import java.io.Serializable;
 
@@ -9,45 +10,12 @@ import java.io.Serializable;
  * Role
  */
 @TableName("role")
+@Data
 public class Role implements Serializable {
     private static final long serialVersionUID = 6382925944937625109L;
 
-    /**
-     * ID
-     */
     @TableId
-    private Integer id;
+    private Integer id; //ID
+    private String name; //角色名称
 
-    /**
-     * 角色名称
-     */
-    private String name;
-
-    /**
-     * 获取ID
-     */
-    public Integer getId() {
-        return id;
-    }
-
-    /**
-     * 设置ID
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    /**
-     * 获取角色名称
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * 设置角色名称
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
 }

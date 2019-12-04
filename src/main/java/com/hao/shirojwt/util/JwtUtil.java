@@ -6,8 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.hao.shirojwt.exception.BDException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.io.UnsupportedEncodingException;
@@ -16,9 +15,9 @@ import java.util.Date;
 /**
  * JAVA-JWT工具类
  */
+@Slf4j
 @Component
 public class JwtUtil {
-    private static final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
 
     /**
      * 过期时间改为从配置文件获取
@@ -45,7 +44,7 @@ public class JwtUtil {
             DecodedJWT jwt = verifier.verify(token);
             return true;
         } catch (UnsupportedEncodingException e) {
-            logger.error("JWTToken认证解密出现UnsupportedEncodingException异常:" + e.getMessage());
+            log.error("JWTToken认证解密出现UnsupportedEncodingException异常:" + e.getMessage());
             throw new BDException("JWTToken认证解密出现UnsupportedEncodingException异常:" + e.getMessage());
         }
     }
@@ -62,7 +61,7 @@ public class JwtUtil {
             // 只能输出String类型，如果是其他类型返回null
             return jwt.getClaim(claim).asString();
         } catch (JWTDecodeException e) {
-            logger.error("解密Token中的公共信息出现JWTDecodeException异常:" + e.getMessage());
+            log.error("解密Token中的公共信息出现JWTDecodeException异常:" + e.getMessage());
             throw new BDException("解密Token中的公共信息出现JWTDecodeException异常:" + e.getMessage());
         }
     }
@@ -71,8 +70,6 @@ public class JwtUtil {
      * 生成签名
      * @param account 帐号
      * @return java.lang.String 返回加密的Token
-     * @author Wang926454
-     * @date 2018/8/31 9:07
      */
     public static String sign(String account, String currentTimeMillis) {
         try {
@@ -88,7 +85,7 @@ public class JwtUtil {
                     .withExpiresAt(date)
                     .sign(algorithm);
         } catch (UnsupportedEncodingException e) {
-            logger.error("JWTToken加密出现UnsupportedEncodingException异常:" + e.getMessage());
+            log.error("JWTToken加密出现UnsupportedEncodingException异常:" + e.getMessage());
             throw new BDException("JWTToken加密出现UnsupportedEncodingException异常:" + e.getMessage());
         }
     }
