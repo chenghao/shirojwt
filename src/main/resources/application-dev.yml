@@ -15,12 +15,12 @@ spring:
           url: jdbc:mysql://192.168.0.122:3306/shirojwt?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
           username: root
           password: 123456
-          driverClassName: com.mysql.jdbc.Driver
+          driverClassName: com.mysql.cj.jdbc.Driver
         slave:
           url: jdbc:mysql://192.168.0.122:3306/shirojwt?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
           username: root
           password: 123456
-          driverClassName: com.mysql.jdbc.Driver
+          driverClassName: com.mysql.cj.jdbc.Driver
       hikari:
         #最小空闲连接数量
         minIdle: 5

@@ -1,11 +1,10 @@
 package com.hao;
 
-import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 
-@SpringBootApplication(scanBasePackages = {"com.hao"}, exclude = DruidDataSourceAutoConfigure.class)
+@SpringBootApplication(scanBasePackages = {"com.hao"})
 @EnableCaching
 public class StartupApplication {
 

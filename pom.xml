@@ -193,6 +193,7 @@
                         <exclude>*.**</exclude>
                         <exclude>/mapper/**</exclude>
                         <exclude>/webapp/**</exclude>
+                        <exclude>/webapp2/**</exclude>
                     </excludes>
 
                     <archive>

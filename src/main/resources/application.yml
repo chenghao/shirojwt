@@ -27,4 +27,4 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     cache-enabled: false
 
-shiroExcludePath: /v2/api-docs, /webjars/**, /swagger-resources/**, /swagger-ui.html, /doc.html, /webapp/**, /webapp2/**
+excludePath: "/v2/api-docs, /webjars/**, /swagger-resources/**, /swagger-ui.html, /doc.html, /webapp/**, /webapp2/**"
