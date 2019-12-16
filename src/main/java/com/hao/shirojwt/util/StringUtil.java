@@ -6,6 +6,12 @@ import java.security.MessageDigest;
  * String工具
  */
 public class StringUtil {
+
+    public static void main(String[] args) {
+        System.out.println(isBlank("   "));
+        System.out.println(clearUnescape(" aa "));
+    }
+
     /**
      * 定义下划线
      */

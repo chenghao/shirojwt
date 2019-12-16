@@ -24,6 +24,7 @@ public class MyWebMvcConfigurer extends WebMvcConfigurationSupport {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/webapp/**").addResourceLocations("classpath:/webapp/");
+        registry.addResourceHandler("/webapp2/**").addResourceLocations("classpath:/webapp2/");
     }
 
     @Bean

@@ -2,6 +2,7 @@ package com.hao.shirojwt.config.shiro;
 
 import com.hao.shirojwt.config.shiro.cache.CustomCacheManager;
 import com.hao.shirojwt.config.shiro.jwt.JwtFilter;
+import com.hao.shirojwt.util.StringUtil;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -9,6 +10,7 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -23,6 +25,9 @@ import java.util.Map;
  */
 @Configuration
 public class ShiroConfig {
+
+    @Value("${shiroExcludePath}")
+    private String shiroExcludePath;
 
     /**
      * 配置使用自定义Realm，关闭Shiro自带的session
@@ -75,16 +80,26 @@ public class ShiroConfig {
         // 自定义url规则使用LinkedHashMap有序Map
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>(16);
 
+        if(StringUtil.isNotBlank(shiroExcludePath)){
+            shiroExcludePath = shiroExcludePath.replaceAll("，", ",");
+            String[] paths = shiroExcludePath.split(",");
+            for(String path: paths){
+                if(StringUtil.isNotBlank(path)){
+                    filterChainDefinitionMap.put(StringUtil.clearUnescape(path), "anon");
+                }
+            }
+        }
+
         // Swagger接口文档
-         filterChainDefinitionMap.put("/v2/api-docs", "anon");
-         filterChainDefinitionMap.put("/webjars/**", "anon");
-         filterChainDefinitionMap.put("/swagger-resources/**", "anon");
-         filterChainDefinitionMap.put("/swagger-ui.html", "anon");
-         filterChainDefinitionMap.put("/doc.html", "anon");
-
+        /*
+        filterChainDefinitionMap.put("/v2/api-docs", "anon");
+        filterChainDefinitionMap.put("/webjars/**", "anon");
+        filterChainDefinitionMap.put("/swagger-resources/**", "anon");
+        filterChainDefinitionMap.put("/swagger-ui.html", "anon");
+        filterChainDefinitionMap.put("/doc.html", "anon");
+        */
          // 静态文件
-        filterChainDefinitionMap.put("/webapp/**", "anon");
-
+        //filterChainDefinitionMap.put("/webapp/**", "anon");
         // 公开接口
         // filterChainDefinitionMap.put("/api/**", "anon");
 
