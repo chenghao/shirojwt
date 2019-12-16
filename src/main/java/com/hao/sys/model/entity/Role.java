@@ -7,15 +7,16 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * Role
+ * 角色
  */
-@TableName("role")
+@TableName("sys_role")
 @Data
 public class Role implements Serializable {
     private static final long serialVersionUID = 6382925944937625109L;
 
     @TableId
     private Integer id; //ID
+    private String code; //角色code
     private String name; //角色名称
 
 }

@@ -8,7 +8,7 @@ import lombok.Data;
 
 import java.util.Date;
 
-@TableName("user")
+@TableName("sys_user")
 @Data
 public class UserDto extends User {
     /**

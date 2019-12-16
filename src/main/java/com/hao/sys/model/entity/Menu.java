@@ -9,9 +9,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * User
+ * 菜单
  */
-@TableName("menu")
+@TableName("sys_menu")
 @Data
 public class Menu implements Serializable {
 

@@ -1,11 +1,15 @@
 package com.hao.sys.model.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
 
-//@TableName("sys_oper_log")
+/**
+ * 操作日志
+ */
+@TableName("sys_oper_log")
 @Data
 public class OperLog implements Serializable {
 

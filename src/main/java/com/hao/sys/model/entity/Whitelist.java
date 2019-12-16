@@ -9,19 +9,18 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 用户
+ * IP白名单
  */
-@TableName("sys_user")
+@TableName("sys_whitelist")
 @Data
-public class User implements Serializable {
-    private static final long serialVersionUID = 3342723124953988435L;
+public class Whitelist implements Serializable {
 
     @TableId
     private Integer id; //ID
-    private String account; //帐号
-    private String password; //密码
-    private String username; //昵称
+    private String ip; //IP
+    private String remark; //备注
+
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date regTime; //注册时间
+    private Date createTime; //创建时间
 
 }
