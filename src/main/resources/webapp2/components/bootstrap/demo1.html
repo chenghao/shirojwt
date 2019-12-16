@@ -1,0 +1,109 @@
+
+<div class="col-sm-12">
+    <div class="ibox">
+        <div class="ibox-body">
+            <div class="fixed-table-toolbar">
+                <div class="columns pull-left">
+                    <button type="button" class="btn btn-primary" onclick="add()">
+                        <i class="fa fa-plus" aria-hidden="true"></i>添加
+                    </button>
+                </div>
+
+                <div class="columns pull-right">
+                    <button class="btn btn-success" onclick="reLoad(1)">查询</button>
+                </div>
+                <div class="columns pull-right col-md-2 nopadding">
+                    <select data-placeholder="选择类别" class="form-control chosen-select"
+                            tabindex="2" style="width: 100%">
+                        <option value="">选择类别</option>
+                    </select>
+                </div>
+            </div>
+
+            <table id="exampleTable" data-mobile-responsive="true"> </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        load();
+    });
+    
+    function load() {
+        var columns = [
+            { checkbox : true },
+            { field : 'id', title : '编号' },
+            { field : 'name', title : '标签名' },
+            { field : 'value', title : '数据值', width : '100px' },
+            { field : 'type', title : '类型' },
+            { field : 'description', title : '描述' },
+            { visible : false, field : 'sort', title : '排序（升序）' },
+            { visible : false, field : 'parentId', title : '父级编号' },
+            { visible : false, field : 'createBy', title : '创建者' },
+            { visible : false, field : 'createDate', title : '创建时间' },
+            { visible : false, field : 'updateBy', title : '更新者' },
+            { visible : false, field : 'updateDate', title : '更新时间' },
+            { visible : false, field : 'remarks', title : '备注信息' },
+            { visible : false, field : 'delFlag', title : '删除标记' },
+        ];
+
+        var exampleTable = $('#exampleTable').bootstrapTable({
+            method : 'get', // 服务器数据的请求方式 get or post
+            url : "", // 服务器数据的加载地址
+            //	showRefresh : true,
+            //	showToggle : true,
+            //	showColumns : true,
+            iconSize : 'outline',
+            toolbar : '#exampleToolbar',
+            striped : true, // 设置为true会有隔行变色效果
+            dataType : "json", // 服务器返回的数据类型
+            pagination : true, // 设置为true会在底部显示分页条
+            // queryParamsType : "limit",
+            // //设置为limit则会发送符合RESTFull格式的参数
+            singleSelect : false, // 设置为true将禁止多选
+            // contentType : "application/x-www-form-urlencoded",
+            // //发送到服务器的数据编码类型
+            pageSize : 10, // 如果设置了分页，每页数据条数
+            pageNumber : 1, // 如果设置了分布，首页页码
+            //search : true, // 是否显示搜索框
+            showColumns : false, // 是否显示内容下拉框（选择显示的列）
+            sidePagination : "server", // 设置在哪里进行分页，可选值为"client" 或者 "server"
+            queryParams : function(params) { //设置分页参数
+                //说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
+                return queryParams(params);
+            },
+            // //请求服务器数据时，你可以通过重写参数的方式添加一些额外的参数，例如 toolbar 中的参数 如果
+            // queryParamsType = 'limit' ,返回参数必须包含
+            // limit, offset, search, sort, order 否则, 需要包含:
+            // pageSize, pageNumber, searchText, sortName,
+            // sortOrder.
+            // 返回false将会终止请求
+            columns : columns,
+            onLoadSuccess: function(data){
+                var query = window.queryData;
+                if(appendRows){
+                    var columns = this.columns[0];
+                    var rows = {};
+                    for(var i = 0; i < columns.length; i++){
+                        if(!rows[columns[i].field]){
+                            if(i === 1){
+                                rows[columns[i].field] = "合计";
+                            }else{
+                                rows[columns[i].field] = "-";
+                            }
+                        }
+                    }
+                    var d = concatDict(query, appendRows.data);
+                    ajaxRequest(appendRows.url, function (data) {
+                        $.extend(rows, data);
+                        exampleTable.bootstrapTable('insertRow', {
+                            index: 0,
+                            row: rows,
+                        });
+                    }, d);
+                }
+            },
+        });
+    }
+</script>
