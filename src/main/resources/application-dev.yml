@@ -59,3 +59,7 @@ pool:
   maxPoolSize: 3
   keepAliveTime: 0
   queueNum: 100
+
+whitelist:
+  excludes: ".map, .js, .css, .jpg, .png, .gif, /login, /error"
+  open: true

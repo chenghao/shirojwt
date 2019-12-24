@@ -3,10 +3,10 @@
 <mapper namespace="com.hao.sys.dao.RoleMapper">
 
   <select id="findRoleByUser" resultType="com.hao.sys.model.RoleDto" parameterType="com.hao.sys.model.UserDto">
-    SELECT r.id as id, r.name as `name`
+    SELECT r.id as id, r.name as `name`, r.code as code
     FROM `user` u
-    LEFT JOIN user_role ur ON u.id = ur.user_id
-    LEFT JOIN role r ON r.id = ur.role_id
+    LEFT JOIN sys_user_role ur ON u.id = ur.user_id
+    LEFT JOIN sys_role r ON r.id = ur.role_id
     <where>
       1 = 1
       <if test="account != null and account != '' ">

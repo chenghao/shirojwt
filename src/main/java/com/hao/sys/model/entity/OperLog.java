@@ -1,6 +1,7 @@
 package com.hao.sys.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -25,6 +26,8 @@ public class OperLog implements Serializable {
     private String operParam; // '请求参数'
     private String status; // '操作状态（SUCCESS正常， FAIL异常）'
     private String errorMsg; // '错误消息'
-    private Date operTime;
+
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date createTime;  //创建时间
 
 }

@@ -1,11 +1,13 @@
 package com.hao.shirojwt.config;
 
+import com.hao.shirojwt.interceptor.WhiteListInterceptor;
 import org.lionsoul.ip2region.DbConfig;
 import org.lionsoul.ip2region.DbMakerConfigException;
 import org.lionsoul.ip2region.DbSearcher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
@@ -14,6 +16,12 @@ import java.io.IOException;
 
 @Configuration
 public class MyWebMvcConfigurer extends WebMvcConfigurationSupport {
+
+    // 全局拦截ip白名单
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new WhiteListInterceptor()).addPathPatterns("/**");
+    }
 
     // 支持跨域访问
     @Override

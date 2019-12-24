@@ -179,7 +179,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
     private void response401(ServletResponse response, String msg) {
         HttpServletResponse httpServletResponse = WebUtils.toHttp(response);
         httpServletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
-        httpServletResponse.setCharacterEncoding("UTF-8");
+        httpServletResponse.setCharacterEncoding(Constant.UTF8);
         httpServletResponse.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE ); // "application/json; charset=utf-8"
         try (PrintWriter out = httpServletResponse.getWriter()) {
             String data = JSONObject.toJSONString(R.error(HttpStatus.UNAUTHORIZED.value(), "无权访问(Unauthorized):" + msg));

@@ -130,7 +130,7 @@ public class StringUtil {
     static final char HEX_DIGITS[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
     public final static String MD5(String s) {
         try {
-            byte[] btInput = s.getBytes("UTF-8");
+            byte[] btInput = s.getBytes(Constant.UTF8);
             MessageDigest mdInst = MessageDigest.getInstance("MD5");
             mdInst.update(btInput);
             byte[] md = mdInst.digest();

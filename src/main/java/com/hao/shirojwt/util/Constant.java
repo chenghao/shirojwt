@@ -1,9 +1,21 @@
 package com.hao.shirojwt.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 常量
  */
 public class Constant {
+    /**
+     * IP白名单集合
+     */
+    public static List<String> whitelists = new ArrayList<>();
+
+    /**
+     * utf-8
+     */
+    public final static String UTF8 = "UTF-8";
 
     /**
      * redis-OK

@@ -9,21 +9,21 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 用户
+ * 字典
  */
-@TableName("sys_user")
+@TableName("sys_dict")
 @Data
-public class User implements Serializable {
-    private static final long serialVersionUID = 3342723124953988435L;
+public class Dict implements Serializable {
 
     @TableId
     private Integer id; //ID
-    private String account; //帐号
-    private String password; //密码
-    private String username; //昵称
+    private Integer pid; //父id
+    private String name; //字典名称
+    private String value; //字典值
+    private float sort; //排序
     private Integer delState; //删除状态（0未删除，1已删除）
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date regTime; //注册时间
+    private Date createTime; //创建时间
 
 }

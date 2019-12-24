@@ -60,7 +60,7 @@ public class UserRealm extends AuthorizingRealm {
         for (RoleDto roleDto : roleDtos) {
             if (roleDto != null) {
                 // 添加角色
-                simpleAuthorizationInfo.addRole(roleDto.getName());
+                simpleAuthorizationInfo.addRole(roleDto.getCode());
                 // 根据用户角色查询权限
                 List<MenuDto> menuDtos = menuMapper.findMenuByRole(roleDto);
                 for (MenuDto menuDto : menuDtos) {
