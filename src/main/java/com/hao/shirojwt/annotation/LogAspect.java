@@ -2,12 +2,15 @@ package com.hao.shirojwt.annotation;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hao.shirojwt.annotation.enums.BusinessStatus;
+import com.hao.shirojwt.config.SpringUtils;
 import com.hao.shirojwt.util.HttpContextUtils;
 import com.hao.shirojwt.util.IPUtil;
 import com.hao.shirojwt.util.ThreadPoolUtil;
 import com.hao.shirojwt.util.UserUtil;
+import com.hao.sys.model.OperLogDto;
 import com.hao.sys.model.UserDto;
 import com.hao.sys.model.entity.OperLog;
+import com.hao.sys.service.OperLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
@@ -75,7 +78,7 @@ public class LogAspect {
             }catch (Exception ex){ }
 
             // *========数据库日志=========*//
-            OperLog operLog = new OperLog();
+            OperLogDto operLog = new OperLogDto();
             operLog.setOperId(userId);
             // 请求的地址
             String ip = IPUtil.getIpByReq();
@@ -98,15 +101,15 @@ public class LogAspect {
             getControllerMethodDescription(controllerLog, operLog);
 
             // 直接记录日志
-            log.info("日志记录： " + JSONObject.toJSONString(operLog));
+            log.debug("日志记录： " + JSONObject.toJSONString(operLog));
 
             // 保存数据库
-            /*threadPoolUtil.execute(new Runnable() {
+            threadPoolUtil.execute(new Runnable() {
                 @Override
                 public void run() {
-                    (SpringUtils.getBean(OperLogService.class)).insert(operLog);
+                    (SpringUtils.getBean(OperLogService.class)).save(operLog);
                 }
-            });*/
+            });
         } catch (Exception exp) {
             // 记录本地异常日志
             log.error("==前置通知异常==");

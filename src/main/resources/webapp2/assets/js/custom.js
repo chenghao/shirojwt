@@ -143,9 +143,10 @@ function jqueryAjax(url, param, callback, method, notLoad, hideSuccessMsg, notJo
         url: url,
         type: method ? method : "get",
         data: param ? param : {},
+        contentType: "application/json;charset=utf-8",
         dataType: "json",
         beforeSend: function (xhr) {
-            xhr.setRequestHeader('Authorization', 'Bearer ' + layui.config.getToken());
+            xhr.setRequestHeader('Authorization', layui.config.getToken());
         },
         success: function (data) {
             console.log("==================")

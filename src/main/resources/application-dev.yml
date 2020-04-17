@@ -12,12 +12,12 @@ spring:
       primary: master #设置默认的数据源或者数据源组,默认值即为master
       datasource:
         master:
-          url: jdbc:mysql://192.168.0.122:3306/shirojwt?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
+          url: jdbc:mysql://localhost:3306/shirojwt?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC
           username: root
           password: 123456
           driverClassName: com.mysql.cj.jdbc.Driver
         slave:
-          url: jdbc:mysql://192.168.0.122:3306/shirojwt?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
+          url: jdbc:mysql://localhost:3306/shirojwt?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC
           username: root
           password: 123456
           driverClassName: com.mysql.cj.jdbc.Driver
@@ -40,7 +40,7 @@ spring:
 
 redis:
   database: 1
-  host: 192.168.0.122
+  host: localhost
   port: 6379
   password: lym123..
   timeout: 10000
@@ -62,4 +62,3 @@ pool:
 
 whitelist:
   excludes: ".map, .js, .css, .jpg, .png, .gif, /login, /error"
-  open: true

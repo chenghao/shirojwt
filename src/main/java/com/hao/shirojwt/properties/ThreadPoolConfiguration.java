@@ -22,7 +22,7 @@ public class ThreadPoolConfiguration {
                 TimeUnit.MILLISECONDS,
                 new LinkedBlockingQueue<>(properties.getQueueNum()),
                 Executors.defaultThreadFactory(),
-                new ThreadPoolExecutor.CallerRunsPolicy()
+                new ThreadPoolExecutor.DiscardPolicy()
         );
 
         return executorService;

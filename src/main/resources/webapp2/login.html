@@ -22,7 +22,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label"><i class="layui-icon layui-icon-username"></i></label>
                     <div class="layui-input-block">
-                        <input name="username" type="text" placeholder="账号" class="layui-input"
+                        <input name="account" type="text" placeholder="账号" class="layui-input"
                                lay-verify="required" required/>
                     </div>
                 </div>
@@ -59,27 +59,45 @@
         }
         // 表单提交
         form.on('submit(login-submit)', function (obj) {
-            layer.load();
-            $.post(config.base_server + 'user/login', obj.field, function (res) {
-                layer.closeAll('loading');
-                if (200 == res.code) {
-                    // 保存字典数据
-                    store.set('dict', res.dict);
+            loadWait();
+            $.ajax({
+                url: config.base_server + 'user/login',
+                type: "post",
+                data: JSON.stringify(obj.field),
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    if(data.code == 200 || data.code == 0){
+                        // 保存字典数据
+                        //store.set('dict', data.dict);
 
-                    // 保存token
-                    config.putToken(res.access_token);
-                    layer.msg(res.msg, {icon: 1, time: 1500}, function () {
-                        goIndex();
-                    });
-                } else {
-                    layer.msg(res.msg, {icon: 5});
+                        // 保存token
+                        config.putToken(data.data);
+                        success(data.msg, {icon: 1, time: 1500}, function () {
+                            goIndex();
+                        });
+                    } else {
+                        error(data.msg);
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    if(jqXHR.hasOwnProperty("responseJSON")){
+                        var json = jqXHR.responseJSON;
+                        if(json.hasOwnProperty("msg")){
+                            error(json.msg);
+                        }
+                    }
+                },
+                complete: function () {
+                    closeLoadWait();
                 }
-            }, 'json');
+            });
+
             return false;
         });
 
         function goIndex() {
-            location.replace('/');
+            location.replace('/webapp2/index.html');
         }
     });
 </script>

@@ -20,8 +20,6 @@ import java.util.List;
 @Component
 public class WhiteListInterceptor extends HandlerInterceptorAdapter {
 
-    @Value("${whitelist.open}")
-    private boolean whitelistOpen;
     @Value("${whitelist.excludes}")
     private String excludes;
 
@@ -39,10 +37,14 @@ public class WhiteListInterceptor extends HandlerInterceptorAdapter {
 
         boolean bo = false;
         List<String> ips = Constant.whitelists;
-        if(whitelistOpen && ips.size() > 0){
+        if(ips.size() > 0){
             String currIp = IPUtil.getIpByReq();
-            if(ips.contains(currIp)){
+            if(ips.contains("0.0.0.0")){
                 bo = true;
+            }else{
+                if(ips.contains(currIp)){
+                    bo = true;
+                }
             }
 
             if(!bo){

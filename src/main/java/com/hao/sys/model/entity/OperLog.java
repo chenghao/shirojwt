@@ -1,5 +1,6 @@
 package com.hao.sys.model.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -14,6 +15,7 @@ import java.util.Date;
 @Data
 public class OperLog implements Serializable {
 
+    @TableId
     private Long id;
 
     private String title; //'模块标题'
